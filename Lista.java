@@ -1,11 +1,12 @@
 
 public class Lista {
 
-	Header header;
-	Node first;
-	Node last;
+	private Header header;
+	private Node first;
+	private Node last;
 
 	public Lista() {
+		this.header = new Header();
 	}
 
 	public void add(Object element) {
@@ -21,21 +22,20 @@ public class Lista {
 			current.setNext(first);
 			first = current;
 		}
-		// Header.num_elem++;
+		header.addElement();
 	}
 
-	public void add(int item, int ind) {
+	public void add(int item, int index) {
 		Node atual, temp;
 		int i = 0;
 
-		if (ind <= 0)
+		if (index <= 0)
 			add(item);
-		else if (ind >= Header.num_elem)
+		else if (index >= header.getNumberOfElements())
 			addOnEnd(item);
 		else {
 			temp = first;
-			// descobre a posição onde deve ser inserido
-			while ((i < ind) && (temp != null)) {
+			while ((i < index) && (temp != null)) {
 				temp = temp.getNext();
 				i++;
 			}
@@ -47,7 +47,7 @@ public class Lista {
 
 			atual.getNext().setPrev(atual);
 			atual.getPrev().setNext(atual);
-			// Header.num_elem++;
+			header.addElement();
 		}
 	}
 
@@ -64,13 +64,13 @@ public class Lista {
 			current.setPrev(last);
 			last = current;
 		}
-		// Header.num_elem++;
+		header.addElement();
 	}
 
-	public void removeFirst() throws Exception {
+	public void removeFirst() {
 
 		if (isEmpty())
-			throw new Exception("EMPTY LIST");
+			System.out.println("EMPTY LIST");
 
 		if (first.equals(last)) {
 			first = null;
@@ -81,24 +81,24 @@ public class Lista {
 			first.setPrev(null);
 			temp.setNext(null);
 		}
-		// Header.num_elem--;
+		header.removeElement();
 	}
 
-	public void removeLast() throws Exception {
+	public void removeLast() {
 
 		if (isEmpty())
-			throw new Exception("EMPTY LIST");
+			System.out.println("EMPTY LIST");
 
 		if (first.equals(last)) {
 			first = null;
 			last = null;
 		} else {
-			Node current = last; // Procura o penúltimo nodo
+			Node current = last;
 			current = current.getPrev();
 			last = current;
 			current.setNext(null);
 		}
-		// Header.num_elem--;
+		header.removeElement();
 	}
 
 	public void remove(int index) {
@@ -118,16 +118,26 @@ public class Lista {
 		} else {
 			temp.setNext(null);
 		}
-		// Header.num_elem--;
+		header.removeElement();
+	}
+
+	public void clear() {
+		first = null;
+		last = null;
+		header.removeAllElements();
 	}
 
 	public boolean isEmpty() {
 		return first == null;
 	}
+	
+	public int lenght() {
+		return this.header.getNumberOfElements();
+	}
 
 	public void print() {
 		if (isEmpty()) {
-			System.out.println("The list is empty");
+			System.out.println("EMPTY LIST");
 			return;
 		}
 		System.out.println("LinkedList:");
