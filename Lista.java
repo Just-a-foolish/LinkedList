@@ -51,7 +51,7 @@ public class Lista {
 		}
 	}
 
-	public void addOnEnd(int element) {
+	public void addOnEnd(Object element) {
 		Node current;
 		if (isEmpty()) {
 			current = new Node(element);
@@ -120,6 +120,16 @@ public class Lista {
 		}
 		header.removeElement();
 	}
+	
+	public Object get(int index) {
+		Node current = first;
+		int i = 0;
+		while( (current != null) && (i < index)) {
+			current = current.getNext();
+			i++;
+		}
+		return current.getElement();
+	}
 
 	public void clear() {
 		first = null;
@@ -127,13 +137,14 @@ public class Lista {
 		header.removeAllElements();
 	}
 
+	public int length() {
+		return this.header.getNumberOfElements();
+	}
+	
 	public boolean isEmpty() {
 		return first == null;
 	}
 	
-	public int lenght() {
-		return this.header.getNumberOfElements();
-	}
 
 	public void print() {
 		if (isEmpty()) {
